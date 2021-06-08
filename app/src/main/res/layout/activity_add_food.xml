@@ -122,7 +122,7 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:hint="Nhập giá"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="20sp"

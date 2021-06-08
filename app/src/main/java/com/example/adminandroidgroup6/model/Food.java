@@ -7,13 +7,15 @@ public class Food {
     private double price;
     private String status;
     private String linkImage;
+    private boolean isTopping;
 
-    public Food(String foodName, String type, double price, String status, String linkImage) {
+    public Food(String foodName, String type, double price, String status, String linkImage,boolean isTopping) {
         this.foodName = foodName;
         this.type = type;
         this.price = price;
         this.status = status;
         this.linkImage = linkImage;
+        this.isTopping =isTopping;
     }
 
     public Food() {
@@ -57,5 +59,20 @@ public class Food {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLinkImage() {
+        return linkImage;
+    }
+
+    public void setLinkImage(String linkImage) {
+        this.linkImage = linkImage;
+    }
+
+    public boolean isTopping() {
+        return isTopping;
+    }
+    public void setTopping(boolean topping) {
+        isTopping = topping;
     }
 }

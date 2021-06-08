@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.example.adminandroidgroup6.R;
 import com.example.adminandroidgroup6.model.Food;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class FoodAdapter extends BaseAdapter {
         return 0;
     }
     private class ViewHolder{
+        ImageView ivFood;
         TextView tvFoodName, tvType, tvPrice, tvStatus;
     }
 
@@ -53,6 +56,7 @@ public class FoodAdapter extends BaseAdapter {
             viewHolder.tvType =convertView.findViewById(R.id.textViewTypeFoodLayoutFoodItem);
             viewHolder.tvPrice = convertView.findViewById(R.id.textViewPriceLayoutFoodItem);
             viewHolder.tvStatus = convertView.findViewById(R.id.textViewStatusLayoutFoodItem);
+            viewHolder.ivFood = convertView.findViewById(R.id.imageViewFoodLayoutFoodItem);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -62,6 +66,11 @@ public class FoodAdapter extends BaseAdapter {
         viewHolder.tvType.setText(food.getType());
         viewHolder.tvPrice.setText(""+food.getPrice()+" vnđ");
         viewHolder.tvStatus.setText(food.getStatus());
+
+        if(food.getLinkImage()!=null)
+            Picasso.with(context).load(food.getLinkImage()).fit().centerCrop()
+                    .into(viewHolder.ivFood);
+        else viewHolder.ivFood.setImageResource(R.drawable.ic_image);
         return convertView;
     }
 }
