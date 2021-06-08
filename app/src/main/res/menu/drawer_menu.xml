@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Quản lý cửa hàng">
+        <menu>
+            <item
+                android:id="@+id/menuItemHome"
+                android:icon="@drawable/ic_home"
+                android:title="Trang chủ" />
+            <item
+                android:id="@+id/menuItemOrder"
+                android:icon="@drawable/ic_order"
+                android:title="Đơn hàng" />
+            <item
+                android:id="@+id/menuItemFoods"
+                android:icon="@drawable/ic_food"
+                android:title="Thực đơn" />
+            <item
+                android:id="@+id/menuItemProceeds"
+                android:icon="@drawable/ic_proceeds"
+                android:title="Doanh thu" />
+            <item
+                android:id="@+id/menuItemCustomers"
+                android:icon="@drawable/ic_customer"
+                android:title="Khách hàng thân thiết" />
+            <item
+                android:id="@+id/menuItemStaff"
+                android:icon="@drawable/ic_staff"
+                android:title="Quản lý nhân viên" />
+        </menu>
+    </item>
+    <item android:title="Quản lý tài khoản">
+        <menu>
+            <item
+                android:id="@+id/menuItemUpdateAccount"
+                android:icon="@drawable/ic_account"
+                android:title="Thay đổi thông tin" />
+            <item
+                android:id="@+id/menuItemExit"
+                android:icon="@drawable/ic_exit"
+                android:title="Đăng xuất" />
+        </menu>
+    </item>
+</menu>
