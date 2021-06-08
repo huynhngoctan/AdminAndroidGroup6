@@ -29,6 +29,8 @@ import androidx.appcompat.widget.Toolbar;
 
 
 import com.example.adminandroidgroup6.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,7 +61,10 @@ public class AddFoodActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
 
+        myRef.setValue("Hello, World!");
 
         listType = new ArrayList<>();
         addListType();
