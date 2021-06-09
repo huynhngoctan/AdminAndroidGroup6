@@ -21,6 +21,7 @@ public class FirebaseHelper {
     FoodAdapter adapter;
     DatabaseReference db;
     boolean saved;
+    boolean deleted;
     ArrayList<Food> listFoods = new ArrayList<>();
     ArrayList<Food> listToppings = new ArrayList<>();
     Context context;
@@ -45,7 +46,6 @@ public class FirebaseHelper {
                 String childID = db.child("Food").push().getKey();
                 food.setId(childID);
                 db.child("Food").child(childID).setValue(food);
-                System.out.println(childID);
                 saved = true;
             } catch (DatabaseException e) {
                 e.printStackTrace();
@@ -54,7 +54,32 @@ public class FirebaseHelper {
         }
         return saved;
     }
-
+    public boolean update(Food food) {
+        if (food == null) saved = false;
+        else {
+            try {
+                db.child("Food").child(food.getId()).setValue(food);
+                saved = true;
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+                saved = false;
+            }
+        }
+        return saved;
+    }
+    public boolean delete(String id){
+        if (id == null) deleted = false;
+        else {
+            try {
+                db.child("Food").child(id).removeValue();
+                deleted = true;
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+                deleted = false;
+            }
+        }
+        return deleted;
+    }
     public void retrieve() {
         db.child("Food").addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,4 +106,8 @@ public class FirebaseHelper {
         }
         adapter.notifyDataSetChanged();
     }
+
+  public Food getFoodByPosition(int position){
+        return  listFoods.get(position);
+  }
 }

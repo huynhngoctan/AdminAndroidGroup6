@@ -1,5 +1,6 @@
 package com.example.adminandroidgroup6.menuFoods;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,4 +32,15 @@ public class FoodsViewPaperFragment extends ListFragment {
         return view;
     }
 
+    @Override
+    public void onListItemClick(@NonNull ListView l, View v, int position, long id) {
+        Intent intent = new Intent(getActivity(),AddFoodActivity.class);
+        Bundle bundle = new Bundle();
+        Food food = helper.getFoodByPosition(position);
+        bundle.putString("action","update");
+        bundle.putSerializable("food",food);
+        intent.putExtra("bundle",bundle);
+        startActivity(intent);
+        super.onListItemClick(l, v, position, id);
+    }
 }

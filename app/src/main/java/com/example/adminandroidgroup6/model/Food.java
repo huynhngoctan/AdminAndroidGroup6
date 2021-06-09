@@ -1,21 +1,25 @@
 package com.example.adminandroidgroup6.model;
 
-public class Food {
+import java.io.Serializable;
+
+public class Food implements Serializable {
     private String id;
     private String foodName;
     private String type;
     private double price;
     private String status;
     private String linkImage;
+    private String description;
     private boolean isTopping;
 
-    public Food(String foodName, String type, double price, String status, String linkImage,boolean isTopping) {
+    public Food(String foodName, String type, double price, String status, String linkImage, String description, boolean isTopping) {
         this.foodName = foodName;
         this.type = type;
         this.price = price;
         this.status = status;
         this.linkImage = linkImage;
-        this.isTopping =isTopping;
+        this.description = description;
+        this.isTopping = isTopping;
     }
 
     public Food() {
@@ -74,5 +78,13 @@ public class Food {
     }
     public void setTopping(boolean topping) {
         isTopping = topping;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

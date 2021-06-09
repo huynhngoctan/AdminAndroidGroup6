@@ -38,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -47,21 +48,25 @@ import java.util.Calendar;
 public class AddFoodActivity extends AppCompatActivity {
     Toolbar toolbar;
     RadioButton rbtnFood, rbtnTopping;
-    EditText edtFoodName, edtPrice;
+    EditText edtFoodName, edtPrice, edtDescription;
     TextView tvChooseType;
     ArrayList<String> listType;
     ArrayAdapter adapter;
     ImageView ivFood;
     Bitmap selectImage;
     int REQUEST_CODE = 123;
-    Button btnSave;
+    Button btnSave, btnDelete;
     Switch switchStatus;
+    String action;
+    boolean isNewImage;
+    String idFood;
 
     //FireBase
     DatabaseReference db;
     FirebaseHelper helper;
     String linkImage;
     String imageName;
+    FirebaseStorage storage;
     StorageReference storageRef;
 
     @Override
@@ -74,9 +79,9 @@ public class AddFoodActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Firebase
-        db= FirebaseDatabase.getInstance().getReference();
+        db = FirebaseDatabase.getInstance().getReference();
         helper = new FirebaseHelper(db);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
+        storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
 
@@ -86,11 +91,15 @@ public class AddFoodActivity extends AppCompatActivity {
         tvChooseType = findViewById(R.id.textViewChooseTypeFoodActivityAddFood);
         ivFood = findViewById(R.id.imageViewFoodActivityAddFood);
         btnSave = findViewById(R.id.buttonSaveActivityAddFood);
+        btnDelete = findViewById(R.id.buttonDeleteActivityAddFood);
         edtFoodName = findViewById(R.id.editTextFoodNameActivityAddFood);
         edtPrice = findViewById(R.id.editTextPriceActivityAddFood);
-        rbtnFood =findViewById(R.id.radioButtonFoodActivityAddFood);
-        rbtnTopping =findViewById(R.id.radioButtonToppingActivityAddFood);
-        switchStatus=findViewById(R.id.switchStatusActivityAddFood);
+        edtDescription = findViewById(R.id.editTextDescriptionActivityAddFood);
+        rbtnFood = findViewById(R.id.radioButtonFoodActivityAddFood);
+        rbtnTopping = findViewById(R.id.radioButtonToppingActivityAddFood);
+        switchStatus = findViewById(R.id.switchStatusActivityAddFood);
+
+        actionIntent();
 
         tvChooseType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,11 +117,17 @@ public class AddFoodActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!checkInput()){
-                    Toast.makeText(AddFoodActivity.this,"Vui lòng nhập đủ dữ liệu",Toast.LENGTH_SHORT).show();
-                }else{
+                if (!checkInput()) {
+                    Toast.makeText(AddFoodActivity.this, "Vui lòng nhập đủ dữ liệu", Toast.LENGTH_SHORT).show();
+                } else {
                     saveToDatabase();
                 }
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteFood();
             }
         });
     }
@@ -133,6 +148,7 @@ public class AddFoodActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE && data != null) {
             selectImage = loadFromUri(data.getData());
             ivFood.setImageBitmap(selectImage);
+            isNewImage=true;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -177,51 +193,119 @@ public class AddFoodActivity extends AppCompatActivity {
         if (edtFoodName.getText().toString().isEmpty()) return false;
         if (edtPrice.getText().toString().isEmpty()) return false;
         if (tvChooseType.getText().toString().equals("Chọn loại món  >")) return false;
+        if (edtDescription.getText().toString().isEmpty()) return false;
+
         return true;
     }
-public void saveToDatabase(){
-    Calendar calendar = Calendar.getInstance();
-    imageName = "food"+calendar.getTimeInMillis();
-    StorageReference mountainsRef = storageRef.child("food"+calendar.getTimeInMillis());
-    // Get the data from an ImageView as bytes
 
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    selectImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-    byte[] data = baos.toByteArray();
+    public void saveToDatabase() {
+        if(isNewImage) {
+            Calendar calendar = Calendar.getInstance();
+            imageName = "food" + calendar.getTimeInMillis();
+            StorageReference mountainsRef = storageRef.child("food" + calendar.getTimeInMillis());
+            // Get the data from an ImageView as bytes
 
-    UploadTask uploadTask = mountainsRef.putBytes(data);
-    uploadTask.addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception exception) {
-            Toast.makeText(AddFoodActivity.this,"Lỗi upload ảnh",Toast.LENGTH_SHORT).show();
-        }
-    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-        @Override
-        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-            storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    linkImage=""+uri;
-                    System.out.println(linkImage);
-                    addFood();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            selectImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            UploadTask uploadTask = mountainsRef.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
+                    Toast.makeText(AddFoodActivity.this, "Lỗi upload ảnh", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    storageRef.child(imageName).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            linkImage = "" + uri;
+                            System.out.println(linkImage);
+                            addFood();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                        }
+                    });
                 }
             });
         }
-    });
-}
-public void addFood(){
-    String foodName =edtFoodName.getText().toString().trim();
-    String type =tvChooseType.getText().toString().trim();
-    double price = Double.parseDouble(edtPrice.getText().toString().trim());
-    String status = switchStatus.isChecked()?"Đang mở bán":"Không mở bán";
-    boolean isTopping = rbtnFood.isChecked()?false:true;
-    Food food = new Food(foodName,type,price,status,linkImage,isTopping);
-    if(helper.save(food)) Toast.makeText(AddFoodActivity.this,"Thêm thành công",Toast.LENGTH_SHORT).show();
-            else Toast.makeText(AddFoodActivity.this,"Thêm thất bại",Toast.LENGTH_SHORT).show();
-}
+        else addFood();
+    }
+
+    public void addFood() {
+        String foodName = edtFoodName.getText().toString().trim();
+        String type = tvChooseType.getText().toString().trim();
+        double price = Double.parseDouble(edtPrice.getText().toString().trim());
+        String status = switchStatus.isChecked() ? "Đang mở bán" : "Không mở bán";
+        String description = edtDescription.getText().toString().trim();
+        boolean isTopping = rbtnFood.isChecked() ? false : true;
+        Food food = new Food(foodName, type, price, status, linkImage, description, isTopping);
+        if(action.equals("add")) {
+            if (helper.save(food))
+                Toast.makeText(AddFoodActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(AddFoodActivity.this, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+        }
+        if(action.equals("update")){
+            food.setId(idFood);
+            if (helper.update(food))
+                Toast.makeText(AddFoodActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(AddFoodActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void deleteFood(){
+        if (helper.delete(idFood)){
+            System.out.println(linkImage);
+            storage.getReferenceFromUrl(linkImage).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(AddFoodActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull  Exception e) {
+                    Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                }
+            });
+            }
+        else Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+    }
+    public void actionIntent(){
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("bundle");
+        String action = bundle.getString("action");
+        switch (action) {
+            case "update":
+                btnDelete.setVisibility(View.VISIBLE);
+                this.action = "update";
+                Food food = (Food) bundle.getSerializable("food");
+                idFood= food.getId();
+                if(food.getLinkImage()!=null)
+                    Picasso.with(AddFoodActivity.this).load(food.getLinkImage()).fit().centerCrop()
+                            .into(ivFood);
+                if (food.isTopping()) {
+                    rbtnTopping.setChecked(true);
+                } else {
+                    rbtnFood.setChecked(true);
+                }
+                edtFoodName.setText(food.getFoodName());
+                edtPrice.setText("" + food.getPrice());
+                edtDescription.setText(food.getDescription());
+                tvChooseType.setText(food.getType());
+                if (food.getStatus().equals("Đang mở bán")) switchStatus.setChecked(true);
+                else switchStatus.setChecked(false);
+                linkImage=food.getLinkImage();
+                break;
+            case "add":
+                btnDelete.setVisibility(View.INVISIBLE);
+                this.action = "add";
+                break;
+        }
+
+    }
 }
