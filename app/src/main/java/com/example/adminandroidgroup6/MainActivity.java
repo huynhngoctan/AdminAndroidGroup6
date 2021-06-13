@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.adminandroidgroup6.menuFoods.FoodsFragment;
+import com.example.adminandroidgroup6.menuOrders.OrdersFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -64,7 +65,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.replace(R.id.container_fragment,new FoodsFragment());
                 fragmentTransaction.commit();
                 break;
-
+            case R.id.menuItemOrder:
+                toolbar.setTitle("Đơn hàng");
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_fragment,new OrdersFragment());
+                fragmentTransaction.commit();
+                break;
         }
 
         return true;
