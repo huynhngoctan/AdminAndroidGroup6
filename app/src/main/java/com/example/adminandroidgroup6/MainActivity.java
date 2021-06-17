@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.adminandroidgroup6.changeInfo.ChangeInfoActivity;
 import com.example.adminandroidgroup6.login.LoginActivity;
 import com.example.adminandroidgroup6.menuFoods.FoodsFragment;
 import com.example.adminandroidgroup6.menuOrders.OrdersFragment;
@@ -99,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+                break;
+            case R.id.menuItemUpdateAccount:
+                Intent intent1 = new Intent(MainActivity.this, ChangeInfoActivity.class);
+                startActivity(intent1);
                 break;
         }
 
