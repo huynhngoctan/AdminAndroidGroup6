@@ -23,9 +23,9 @@
                 android:icon="@drawable/ic_customer"
                 android:title="Khách hàng thân thiết" />
             <item
-                android:id="@+id/menuItemStaff"
+                android:id="@+id/menuItemManageAccount"
                 android:icon="@drawable/ic_staff"
-                android:title="Quản lý nhân viên" />
+                android:title="Quản lý tài khoản" />
         </menu>
     </item>
     <item android:title="Quản lý tài khoản">

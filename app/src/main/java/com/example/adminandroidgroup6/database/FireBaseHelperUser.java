@@ -1,12 +1,17 @@
 package com.example.adminandroidgroup6.database;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adminandroidgroup6.manageAccount.ManageAccountAdapter;
+import com.example.adminandroidgroup6.manageAccount.ManageUserDetailActivity;
 import com.example.adminandroidgroup6.model.Food;
 import com.example.adminandroidgroup6.model.User;
 import com.example.adminandroidgroup6.model.UserLogin;
@@ -27,6 +32,8 @@ public class FireBaseHelperUser {
     private boolean isLoadDone=false;
     private LoadingDialog loadingDialog;
     private boolean saved;
+    private RecyclerView recyclerView;
+    private ManageAccountAdapter adapter;
 
     public FireBaseHelperUser(Context context,DatabaseReference db) {
         this.context =context;
@@ -36,11 +43,48 @@ public class FireBaseHelperUser {
         loadingDialog.startLoadingDialog();
         retrieve();
     }
+
+    public FireBaseHelperUser(Context context, DatabaseReference db, RecyclerView recyclerView) {
+        this.context = context;
+        this.db = db;
+        this.recyclerView = recyclerView;
+        listUsers = new ArrayList<>();
+        adapter = new ManageAccountAdapter(this.context,listUsers);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.context,RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        loadingDialog = new LoadingDialog(context);
+        adapter.setOnItemClickListener(new ManageAccountAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(context, ManageUserDetailActivity.class);
+                intent.putExtra("user",listUsers
+                .get(position));
+                context.startActivity(intent);
+            }
+        });
+        loadingDialog.startLoadingDialog();
+        retrieve();
+    }
+
     public boolean update(User user) {
         if (user == null) saved = false;
         else {
             try {
                 db.child("User").child(user.getIdUser()).setValue(user);
+                saved = true;
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+                saved = false;
+            }
+        }
+        return saved;
+    }
+    public boolean updateStatus(String id,String status) {
+        if (id == null) saved = false;
+        else {
+            try {
+                db.child("User").child(id).child("status").setValue(status);
                 saved = true;
             } catch (DatabaseException e) {
                 e.printStackTrace();
@@ -84,7 +128,8 @@ public class FireBaseHelperUser {
             listUsers.add(user);
         }
         isLoadDone=true;
-  loadingDialog.dismissDialog();
+        if(adapter!=null) adapter.notifyDataSetChanged();
+        loadingDialog.dismissDialog();
     }
     public boolean checkUserName(String userName){
         for(User u : listUsers){

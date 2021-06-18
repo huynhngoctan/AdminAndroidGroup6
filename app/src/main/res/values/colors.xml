@@ -12,4 +12,5 @@
     <color name="green">#2DED20</color>
     <color name="red">#E61919</color>
     <color name="login_form">#0099ff</color>
+    <color name="bg_avatar">#E3F6F4</color>
 </resources>

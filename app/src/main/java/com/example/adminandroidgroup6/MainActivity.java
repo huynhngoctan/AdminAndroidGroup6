@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.adminandroidgroup6.changeInfo.ChangeInfoActivity;
 import com.example.adminandroidgroup6.login.LoginActivity;
+import com.example.adminandroidgroup6.manageAccount.ManageAccountFragment;
 import com.example.adminandroidgroup6.menuFoods.FoodsFragment;
 import com.example.adminandroidgroup6.menuOrders.OrdersFragment;
 import com.example.adminandroidgroup6.model.User;
@@ -104,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menuItemUpdateAccount:
                 Intent intent1 = new Intent(MainActivity.this, ChangeInfoActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.menuItemManageAccount:
+                toolbar.setTitle("Quản lý tài khoản");
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_fragment, new ManageAccountFragment());
+                fragmentTransaction.commit();
                 break;
         }
 

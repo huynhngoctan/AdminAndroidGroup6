@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AdminProjectAndroidGroup6.NoActionBar">
-        <activity android:name=".changeInfo.ChangeInfoActivity"></activity>
+        <activity android:name=".manageAccount.ManageUserDetailActivity"></activity>
+        <activity android:name=".changeInfo.ChangeInfoActivity" />
         <activity
             android:name=".menuFoods.AddFoodActivity"
             android:screenOrientation="portrait" />
@@ -25,7 +26,9 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait">
