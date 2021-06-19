@@ -19,9 +19,9 @@
                 android:icon="@drawable/ic_proceeds"
                 android:title="Doanh thu" />
             <item
-                android:id="@+id/menuItemCustomers"
-                android:icon="@drawable/ic_customer"
-                android:title="Khách hàng thân thiết" />
+                android:id="@+id/menuItemManageContact"
+                android:icon="@drawable/ic_contact"
+                android:title="Quản lý liên hệ" />
             <item
                 android:id="@+id/menuItemManageAccount"
                 android:icon="@drawable/ic_staff"

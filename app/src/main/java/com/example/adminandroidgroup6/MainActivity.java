@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.adminandroidgroup6.changeInfo.ChangeInfoActivity;
 import com.example.adminandroidgroup6.login.LoginActivity;
 import com.example.adminandroidgroup6.manageAccount.ManageAccountFragment;
+import com.example.adminandroidgroup6.manageContact.ManageContactFragment;
 import com.example.adminandroidgroup6.menuFoods.FoodsFragment;
 import com.example.adminandroidgroup6.menuOrders.OrdersFragment;
 import com.example.adminandroidgroup6.model.User;
@@ -111,6 +112,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container_fragment, new ManageAccountFragment());
+                fragmentTransaction.commit();
+                break;
+            case R.id.menuItemManageContact:
+                toolbar.setTitle("Quản lý liên hệ");
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container_fragment, new ManageContactFragment());
                 fragmentTransaction.commit();
                 break;
         }
