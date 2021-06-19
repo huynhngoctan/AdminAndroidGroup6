@@ -57,6 +57,7 @@ public class FireBaseHelperContact {
         });
     }
     public void fetchData(DataSnapshot dataSnapshot) {
+        mapUsers.clear();
         listContact.clear();
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
             Contact contact = ds.getValue(Contact.class);
