@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:allowBackup="true"
@@ -12,23 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AdminProjectAndroidGroup6.NoActionBar">
-        <activity android:name=".manageAccount.ManageUserDetailActivity"></activity>
+        <activity android:name=".manageAccount.ManageUserDetailActivity" />
         <activity android:name=".changeInfo.ChangeInfoActivity" />
         <activity
             android:name=".menuFoods.AddFoodActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menuOrders.OrderDetailActivity" /> <!-- <activity android:name=".login.LoginActivity"></activity> -->
-        <!-- <activity -->
-        <!-- android:name=".MainActivity" -->
-        <!-- android:screenOrientation="portrait"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+        <activity android:name=".menuOrders.OrderDetailActivity" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".manageContact.ManageContactDetailActivity"></activity>
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait">

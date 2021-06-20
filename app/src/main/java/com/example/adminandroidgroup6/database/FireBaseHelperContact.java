@@ -1,6 +1,8 @@
 package com.example.adminandroidgroup6.database;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminandroidgroup6.manageContact.ManageContactAdapter;
+import com.example.adminandroidgroup6.manageContact.ManageContactDetailActivity;
 import com.example.adminandroidgroup6.model.Contact;
 import com.example.adminandroidgroup6.model.User;
 import com.example.adminandroidgroup6.support.LoadingDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
@@ -28,6 +32,7 @@ public class FireBaseHelperContact {
     private LoadingDialog loadingDialog;
     private RecyclerView recyclerView;
     private ManageContactAdapter adapter;
+    private boolean saved;
 
     public FireBaseHelperContact(Context context, DatabaseReference db, RecyclerView recyclerView) {
         this.context = context;
@@ -41,8 +46,26 @@ public class FireBaseHelperContact {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.context,RecyclerView.VERTICAL,false);
         this.recyclerView.setLayoutManager(linearLayoutManager);
         this.recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ManageContactAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(context, ManageContactDetailActivity.class);
+                Bundle bundle = new Bundle();
+                Contact contact =listContact.get(position);
+                bundle.putSerializable("contact",contact);
+                bundle.putSerializable("user",mapUsers.get(contact.getIdUser()));
+                intent.putExtra("bundle",bundle);
+                context.startActivity(intent);
+            }
+        });
         retrieve();
     }
+
+    public FireBaseHelperContact(Context context, DatabaseReference db) {
+        this.context = context;
+        this.db = db;
+    }
+
     public void retrieve() {
         db.child("Contact").addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,5 +102,31 @@ public class FireBaseHelperContact {
 
             }
         });
+    }
+    public boolean updateStatus(String id,String status) {
+        if (id == null) saved = false;
+        else {
+            try {
+                db.child("Contact").child(id).child("status").setValue(status);
+                saved = true;
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+                saved = false;
+            }
+        }
+        return saved;
+    }
+    public boolean delete(String id) {
+        if (id == null) saved = false;
+        else {
+            try {
+                db.child("Contact").child(id).removeValue();
+                saved = true;
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+                saved = false;
+            }
+        }
+        return saved;
     }
 }
