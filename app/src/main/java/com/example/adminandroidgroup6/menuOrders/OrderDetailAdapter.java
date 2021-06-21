@@ -10,17 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminandroidgroup6.R;
+import com.example.adminandroidgroup6.model.Food;
 import com.example.adminandroidgroup6.model.OrderDetail;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder> {
     private Context context;
     private ArrayList<OrderDetail> listOrderDetails;
+    private Map<String,Food> mapFoods;
 
-    public OrderDetailAdapter(Context context, ArrayList<OrderDetail> listOrderDetails) {
+    public OrderDetailAdapter(Context context, ArrayList<OrderDetail> listOrderDetails,Map<String,Food>  mapFoods) {
         this.context = context;
         this.listOrderDetails = listOrderDetails;
+        this.mapFoods =mapFoods;
     }
 
     @NonNull
@@ -33,10 +40,13 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @Override
     public void onBindViewHolder(@NonNull  OrderDetailAdapter.OrderDetailViewHolder holder, int position) {
         OrderDetail orderDetail = listOrderDetails.get(position);
-        if(orderDetail==null) return;
-        holder.tvFoodName.setText(orderDetail.getFoodName());
-        holder.tvQuantity.setText(""+orderDetail.getQuantity());
-        holder.tvTotalPrice.setText(""+orderDetail.getTotalPrice());
+        Food food  = mapFoods.get(orderDetail.getIdFood());
+        if(orderDetail==null||food == null) return;
+        holder.tvFoodName.setText(food.getFoodName());
+        holder.tvQuantity.setText("Số lượng: "+orderDetail.getQuantity());
+        holder.tvTotalPrice.setText("Tổng tiền: "+food.getPrice()*orderDetail.getQuantity());
+        if (food.getLinkImage() != null)
+            Picasso.with(this.context).load(food.getLinkImage()).fit().centerCrop().into(holder.ivFood);
     }
 
     @Override
@@ -51,11 +61,13 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         private TextView tvFoodName;
         private TextView tvQuantity;
         private TextView tvTotalPrice;
+        private CircleImageView ivFood;
         public OrderDetailViewHolder(@NonNull  View itemView) {
             super(itemView);
             tvFoodName = itemView.findViewById(R.id.textViewFoodNameLayoutFoodItemOrderDetail);
             tvQuantity = itemView.findViewById(R.id.textViewQuantityLayoutFoodItemOrderDetail);
             tvTotalPrice  =itemView.findViewById(R.id.textViewTotalPriceLayoutFoodItemOrderDetail);
+            ivFood = itemView.findViewById(R.id.imageViewFoodLayoutFoodItemOrderDetail);
         }
     }
 }

@@ -1,37 +1,50 @@
 package com.example.adminandroidgroup6.model;
 
 public class OrderDetail {
-    private String foodName;
-    private double quantity;
-    private double totalPrice;
+    String idOrderDetail;
+    String idOrder;
+    String idFood;
+    int quantity;
 
-    public OrderDetail(String foodName, double quantity, double totalPrice) {
-        this.foodName = foodName;
+    public OrderDetail(String idOrderDetail, String idOrder, String idFood, int quantity) {
+        this.idOrderDetail = idOrderDetail;
+        this.idOrder = idOrder;
+        this.idFood = idFood;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
     }
 
-    public String getFoodName() {
-        return foodName;
+    public OrderDetail() {
     }
 
-    public void setFoodName(String foodName) {
-        this.foodName = foodName;
+    public String getIdOrderDetail() {
+        return idOrderDetail;
     }
 
-    public double getQuantity() {
+    public void setIdOrderDetail(String idOrderDetail) {
+        this.idOrderDetail = idOrderDetail;
+    }
+
+    public String getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(String idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public String getIdFood() {
+        return idFood;
+    }
+
+    public void setIdFood(String idFood) {
+        this.idFood = idFood;
+    }
+
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 }

@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/textViewTotalPriceActivityOrderDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tên đăng nhập:"
@@ -191,7 +191,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat">
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/textViewDateDeliveryActivityOrderDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Năm sinh:"
