@@ -28,7 +28,7 @@ public class NewOrderViewPagerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order_new_viewpager, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewNewOrder);
-        helper = new FireBaseHelperOrder(getActivity(), FirebaseDatabase.getInstance().getReference(), recyclerView);
+        helper = new FireBaseHelperOrder(getActivity(), FirebaseDatabase.getInstance().getReference(), recyclerView,"new");
         return view;
     }
 
