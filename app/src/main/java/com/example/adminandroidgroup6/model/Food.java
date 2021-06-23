@@ -6,13 +6,13 @@ public class Food implements Serializable {
     private String id;
     private String foodName;
     private String type;
-    private double price;
+    private int price;
     private String status;
     private String linkImage;
     private String description;
     private boolean isTopping;
 
-    public Food(String foodName, String type, double price, String status, String linkImage, String description, boolean isTopping) {
+    public Food(String foodName, String type, int price, String status, String linkImage, String description, boolean isTopping) {
         this.foodName = foodName;
         this.type = type;
         this.price = price;
@@ -41,11 +41,11 @@ public class Food implements Serializable {
         this.type = type;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

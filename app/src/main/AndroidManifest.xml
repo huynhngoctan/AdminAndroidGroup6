@@ -14,12 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AdminProjectAndroidGroup6.NoActionBar">
-        <activity android:name=".manageAccount.ManageUserDetailActivity" />
-        <activity android:name=".changeInfo.ChangeInfoActivity" />
+        <activity android:name=".manageAccount.ManageUserDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".changeInfo.ChangeInfoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".menuFoods.AddFoodActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menuOrders.OrderDetailActivity" />
+        <activity android:name=".menuOrders.OrderDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />

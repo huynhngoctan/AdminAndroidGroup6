@@ -31,6 +31,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.adminandroidgroup6.R;
 import com.example.adminandroidgroup6.database.FirebaseHelper;
 import com.example.adminandroidgroup6.model.Food;
+import com.example.adminandroidgroup6.support.LoadingDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +61,7 @@ public class AddFoodActivity extends AppCompatActivity {
     String action;
     boolean isNewImage;
     String idFood;
+    LoadingDialog loadingDialog;
 
     //FireBase
     DatabaseReference db;
@@ -77,6 +79,7 @@ public class AddFoodActivity extends AppCompatActivity {
         toolbar.setTitle("Thêm thức ăn hoặc topping");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        loadingDialog=new LoadingDialog(this);
 
         //Firebase
         db = FirebaseDatabase.getInstance().getReference();
@@ -120,6 +123,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 if (!checkInput()) {
                     Toast.makeText(AddFoodActivity.this, "Vui lòng nhập đủ dữ liệu", Toast.LENGTH_SHORT).show();
                 } else {
+                    loadingDialog.startLoadingDialog();
                     saveToDatabase();
                 }
             }
@@ -127,6 +131,7 @@ public class AddFoodActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 deleteFood();
             }
         });
@@ -170,8 +175,10 @@ public class AddFoodActivity extends AppCompatActivity {
     }
 
     public void addListType() {
-        listType.add("aaa");
-        listType.add("bbb");
+        listType.add("CAPHE");
+        listType.add("TRASUA");
+        listType.add("PHO");
+        listType.add("COM");
     }
 
     public Bitmap loadFromUri(Uri photoUri) {
@@ -240,7 +247,7 @@ public class AddFoodActivity extends AppCompatActivity {
     public void addFood() {
         String foodName = edtFoodName.getText().toString().trim();
         String type = tvChooseType.getText().toString().trim();
-        double price = Double.parseDouble(edtPrice.getText().toString().trim());
+        int price = Integer.parseInt(edtPrice.getText().toString().trim());
         String status = switchStatus.isChecked() ? "Đang mở bán" : "Không mở bán";
         String description = edtDescription.getText().toString().trim();
         boolean isTopping = rbtnFood.isChecked() ? false : true;
@@ -256,6 +263,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 Toast.makeText(AddFoodActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
             else Toast.makeText(AddFoodActivity.this, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
         }
+        loadingDialog.dismissDialog();
     }
     public void deleteFood(){
         if (helper.delete(idFood)){
@@ -274,6 +282,7 @@ public class AddFoodActivity extends AppCompatActivity {
             });
             }
         else Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+        loadingDialog.dismissDialog();
     }
     public void actionIntent(){
         Intent intent = getIntent();
@@ -294,8 +303,11 @@ public class AddFoodActivity extends AppCompatActivity {
                     rbtnFood.setChecked(true);
                 }
                 edtFoodName.setText(food.getFoodName());
+                edtFoodName.setSelection(edtFoodName.getText().length());
                 edtPrice.setText("" + food.getPrice());
+                edtPrice.setText(edtPrice.getText().length());
                 edtDescription.setText(food.getDescription());
+                edtDescription.setSelection(edtDescription.getText().length());
                 tvChooseType.setText(food.getType());
                 if (food.getStatus().equals("Đang mở bán")) switchStatus.setChecked(true);
                 else switchStatus.setChecked(false);

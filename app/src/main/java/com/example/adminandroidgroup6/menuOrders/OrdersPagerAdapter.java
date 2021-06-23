@@ -7,11 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrdersPagerAdapter extends FragmentPagerAdapter {
     private int tabsNumber;
-    private ArrayList<Fragment> listFragments=new ArrayList<>();
-    private ArrayList<String> listTitles= new ArrayList<>();
+    private List<Fragment> listFragments=new ArrayList<>();
+    private List<String> listTitles= new ArrayList<>();
 
     public OrdersPagerAdapter(@NonNull  FragmentManager fm) {
         super(fm);

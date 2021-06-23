@@ -27,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     CheckBox cbSavePass;
     SharedPreferences sharedPreferences;
+    long backPressedTime;
+    Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,17 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
-        ;
+    }
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            backToast.cancel();
+            super.onBackPressed();
+            return;
+        }else {
+            backToast = Toast.makeText(this,"Chạm lại để thoát",Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }

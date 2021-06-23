@@ -102,18 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxSavePassACtivityLogin" />
 
-    <TextView
-        android:id="@+id/textViewForgotPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Quên mật khẩu"
-        android:textColor="@color/login_form"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLoginActivityLogin" />
-
     <CheckBox
         android:id="@+id/checkBoxSavePassACtivityLogin"
         android:layout_width="wrap_content"

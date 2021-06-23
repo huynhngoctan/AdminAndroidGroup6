@@ -15,10 +15,6 @@
                 android:icon="@drawable/ic_food"
                 android:title="Thực đơn" />
             <item
-                android:id="@+id/menuItemProceeds"
-                android:icon="@drawable/ic_proceeds"
-                android:title="Doanh thu" />
-            <item
                 android:id="@+id/menuItemManageContact"
                 android:icon="@drawable/ic_contact"
                 android:title="Quản lý liên hệ" />

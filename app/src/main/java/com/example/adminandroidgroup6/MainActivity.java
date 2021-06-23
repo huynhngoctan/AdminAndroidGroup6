@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adminandroidgroup6.changeInfo.ChangeInfoActivity;
 import com.example.adminandroidgroup6.login.LoginActivity;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    long backPressedTime;
+    Toast backToast;
 
     CircleImageView imageView;
     TextView tvEmail;
@@ -124,5 +127,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(backPressedTime+2000>System.currentTimeMillis()){
+            backToast.cancel();
+            super.onBackPressed();
+            return;
+        }else {
+            backToast = Toast.makeText(this,"Chạm lại để thoát",Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }

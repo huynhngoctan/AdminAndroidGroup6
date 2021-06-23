@@ -1,6 +1,7 @@
 package com.example.adminandroidgroup6.menuOrders;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class OrdersFragment  extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable  Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         setUpViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -47,10 +49,9 @@ public class OrdersFragment  extends Fragment {
 
             }
         });
-        super.onActivityCreated(savedInstanceState);
     }
     public void setUpViewPager(ViewPager viewPager){
-        OrdersPagerAdapter adapter = new OrdersPagerAdapter(getParentFragmentManager());
+        OrdersPagerAdapter adapter = new OrdersPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new NewOrderViewPagerFragment(),"Đơn mới");
         adapter.addFragment(new HandleOrderViewPagerFragment(),"Đã nhận");
         adapter.addFragment(new SuccessfullOrderViewPagerFragment(),"Thành công");
