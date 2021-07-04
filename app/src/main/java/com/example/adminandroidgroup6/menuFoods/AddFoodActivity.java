@@ -305,7 +305,7 @@ public class AddFoodActivity extends AppCompatActivity {
                 edtFoodName.setText(food.getFoodName());
                 edtFoodName.setSelection(edtFoodName.getText().length());
                 edtPrice.setText("" + food.getPrice());
-                edtPrice.setText(edtPrice.getText().length());
+                edtPrice.setSelection(edtPrice.getText().length());
                 edtDescription.setText(food.getDescription());
                 edtDescription.setSelection(edtDescription.getText().length());
                 tvChooseType.setText(food.getType());
