@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (user.getLinkImage() != null)
             Picasso.with(this).load(user.getLinkImage()).fit().centerCrop()
                     .into(imageView);
-        tvEmail.setText(user.getEmail());
+        tvEmail.setText(user.getUsername());
     }
 
     @Override
