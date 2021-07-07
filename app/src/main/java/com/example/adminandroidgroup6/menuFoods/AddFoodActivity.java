@@ -1,6 +1,7 @@
 package com.example.adminandroidgroup6.menuFoods;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -266,23 +268,23 @@ public class AddFoodActivity extends AppCompatActivity {
         loadingDialog.dismissDialog();
     }
     public void deleteFood(){
-        if (helper.delete(idFood)){
-            System.out.println(linkImage);
-            storage.getReferenceFromUrl(linkImage).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(AddFoodActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull  Exception e) {
-                    Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-                }
-            });
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Thông báo!");
+        alertDialog.setMessage("Bạn có chắc là muốn xóa món này không");
+        alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteInDB();
+
             }
-        else Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
-        loadingDialog.dismissDialog();
+        });
+        alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loadingDialog.dismissDialog();
+            }
+        });
+        alertDialog.show();
     }
     public void actionIntent(){
         Intent intent = getIntent();
@@ -318,6 +320,26 @@ public class AddFoodActivity extends AppCompatActivity {
                 this.action = "add";
                 break;
         }
-
+    }
+    public void deleteInDB(){
+        if (helper.delete(idFood)){
+            if(linkImage!=null) {
+                System.out.println(linkImage);
+                storage.getReferenceFromUrl(linkImage).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            Toast.makeText(AddFoodActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        else Toast.makeText(AddFoodActivity.this, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+        loadingDialog.dismissDialog();
     }
 }
