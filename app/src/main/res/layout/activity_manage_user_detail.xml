@@ -65,10 +65,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Tên"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -93,10 +95,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Năm sinh"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -121,10 +125,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Email"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -149,10 +155,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Số điện thoại"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -177,10 +185,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Giới tính"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -205,10 +215,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Tên đăng nhập"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -233,10 +245,12 @@
                     android:layout_weight="6"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:enabled="false"
                     android:inputType="none"
                     android:text="Loại tài khoản"
                     android:textAlignment="viewEnd"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
