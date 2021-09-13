@@ -160,6 +160,19 @@ public class FireBaseHelperOrder {
         loadingDialog.dismissDialog();
         return saved;
     }
+    public boolean updateDateDelivery(String id,String date) {
+        if (id == null) saved = false;
+        else {
+            try {
+                db.child("Order").child(id).child("dateDelivery").setValue(date);
+                saved = true;
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+                saved = false;
+            }
+        }
+        return saved;
+    }
     public boolean delete(String id) {
         loadingDialog.startLoadingDialog();
         if (id == null) saved = false;

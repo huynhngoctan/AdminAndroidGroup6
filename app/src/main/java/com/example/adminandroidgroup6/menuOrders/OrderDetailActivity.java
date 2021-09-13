@@ -27,6 +27,7 @@ import com.example.adminandroidgroup6.database.FireBaseHelperOrderDetail;
 import com.example.adminandroidgroup6.model.Order;
 import com.example.adminandroidgroup6.model.OrderDetail;
 import com.example.adminandroidgroup6.model.User;
+import com.example.adminandroidgroup6.support.TimeCurrent;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -169,7 +170,11 @@ public class OrderDetailActivity extends AppCompatActivity {
             saveToDB("Đang xử lý");
         }else if(type.equals("handle")){
             saveToDB("Thành công");
+            saveDateDelivery();
         }
+    }
+    public void saveDateDelivery(){
+        helperOrder.updateDateDelivery(order.getIdOrder(), TimeCurrent.date());
     }
     public void saveToDB(String status){
         if(helperOrder.updateStatus(order.getIdOrder(),status)){
