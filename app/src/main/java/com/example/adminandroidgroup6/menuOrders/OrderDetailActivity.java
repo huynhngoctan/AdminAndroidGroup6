@@ -168,9 +168,9 @@ public class OrderDetailActivity extends AppCompatActivity {
     public void actionSubmit(){
         if(type.equals("new")){
             saveToDB("Đang xử lý");
+            saveDateDelivery();
         }else if(type.equals("handle")){
             saveToDB("Thành công");
-            saveDateDelivery();
         }
     }
     public void saveDateDelivery(){
