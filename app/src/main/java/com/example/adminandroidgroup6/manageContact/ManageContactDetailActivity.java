@@ -185,7 +185,7 @@ public class ManageContactDetailActivity extends AppCompatActivity {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(user.getPhone(),null,replyContent,null,null);
             Toast.makeText(this,"Gửi thành công",Toast.LENGTH_SHORT).show();
-            helper.updateStatus(user.getIdUser(),"Đã xử lý");
+            helper.updateStatus(contact.getIdContact(),"Đã xử lý");
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
